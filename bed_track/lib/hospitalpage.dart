@@ -112,7 +112,6 @@ class _ShowHospitalState extends State<ShowHospital> {
               Expanded(
                   child: Center(
                 child: ListView.builder(
-<<<<<<< HEAD
                     itemExtent: 200,
                     scrollDirection: Axis.vertical,
                     itemCount: _dataList.length,
@@ -120,23 +119,6 @@ class _ShowHospitalState extends State<ShowHospital> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 50.0,
-=======
-                  itemExtent: 200,
-                  scrollDirection: Axis.vertical,
-                  itemCount: _dataList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      child: Hero(
-                        tag: "$index",
-                        child: DisplayTile(
-                          imageURL: _dataList[index].imageURL,
-                          address: _dataList[index].address,
-                          bedNumber: _dataList[index].bedNumber,
-                          distance: _dataList[index].distance,
-                          hospitalName: _dataList[index].hospitalName,
-                          phoneNumber: _dataList[index].phoneNumber,
-                          displayHero: true,
->>>>>>> c748d0a00c47e5f14b617edbdf7351f6b16ed046
                         ),
                         child: GestureDetector(
                           child: Hero(
