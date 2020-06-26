@@ -18,7 +18,7 @@ class _ShowHospitalState extends State<ShowHospital> {
           "https://cdn.pixabay.com/photo/2016/04/19/13/22/hospital-1338585__340.jpg",
       phoneNumber: "+912203340",
       address: "mumbai",
-      bedNumber: 50,
+      bedNumber: 5,
       distance: 2,
     ),
     Data(
@@ -36,16 +36,16 @@ class _ShowHospitalState extends State<ShowHospital> {
           "https://cdn.pixabay.com/photo/2015/09/07/15/12/care-928653__340.jpg",
       phoneNumber: "+912203340",
       address: "mumbai",
-      bedNumber: 50,
+      bedNumber: 11,
       distance: 2,
     ),
     Data(
-      hospitalName: "ABC",
+      hospitalName: "PQR",
       imageURL:
           "https://cdn.pixabay.com/photo/2016/11/06/10/35/hospital-1802679__340.jpg",
       phoneNumber: "+912203340",
       address: "mumbai",
-      bedNumber: 50,
+      bedNumber: 5,
       distance: 2,
     )
   ];
@@ -110,27 +110,50 @@ class _ShowHospitalState extends State<ShowHospital> {
 //                displayHero: true,
 //              ),
               Expanded(
+                  child: Center(
                 child: ListView.builder(
-                  itemExtent: 200,
-                  scrollDirection: Axis.vertical,
-                  itemCount: _dataList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      child: Hero(
-                        tag: "$index",
-                        child: DisplayTile(
-                          imageURL: _dataList[index].imageURL,
-                          address: _dataList[index].address,
-                          bedNumber: _dataList[index].bedNumber,
-                          distance: _dataList[index].distance,
-                          hospitalName: _dataList[index].hospitalName,
-                          phoneNumber: _dataList[index].phoneNumber,
+                    itemExtent: 200,
+                    scrollDirection: Axis.vertical,
+                    itemCount: _dataList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 50.0,
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ),
+                        child: GestureDetector(
+                          child: Hero(
+                            tag: "$index",
+                            child: DisplayTile(
+                              imageURL: _dataList[index].imageURL,
+                              address: _dataList[index].address,
+                              bedNumber: _dataList[index].bedNumber,
+                              distance: _dataList[index].distance,
+                              hospitalName: _dataList[index].hospitalName,
+                              phoneNumber: _dataList[index].phoneNumber,
+//                          displayHero: true,
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) {
+                                  return DataTile(
+                                    imageURL: _dataList[index].imageURL,
+                                    address: _dataList[index].address,
+                                    bedNumber: _dataList[index].bedNumber,
+                                    distance: _dataList[index].distance,
+                                    hospitalName: _dataList[index].hospitalName,
+                                    phoneNumber: _dataList[index].phoneNumber,
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    }),
+              )),
             ],
           ),
         ),
