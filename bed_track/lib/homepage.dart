@@ -18,10 +18,16 @@ class _HomeState extends State<Home> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(
-                Icons.hotel,
-                size: 150,
-                color: Colors.white,
+              Container(
+                width: 150,
+                height: 150,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: AssetImage("images/ic_launcher.png"),
+                )),
+                margin: EdgeInsets.symmetric(vertical: 20),
+//                  Image.asset("images/ic_launcher.png"),
               ),
               SizedBox(
                 height: 40,
