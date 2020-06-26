@@ -125,6 +125,7 @@ class _ShowHospitalState extends State<ShowHospital> {
                           distance: _dataList[index].distance,
                           hospitalName: _dataList[index].hospitalName,
                           phoneNumber: _dataList[index].phoneNumber,
+                          displayHero: true,
                         ),
                       ),
                     );
