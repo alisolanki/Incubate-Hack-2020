@@ -31,12 +31,12 @@ class DataBase {
         bedNumber: 50,
       ),
       DataBase(
-        hospitalName: "ABC",
+        hospitalName: "ABCD",
         imageURL:
             "https://cdn.pixabay.com/photo/2016/11/06/10/35/hospital-1802679__340.jpg",
         phoneNumber: "+912203340",
         location: PlaceLocation(address: "Mumbai", longitude: 13.0, latitude: 139.0),
-        bedNumber: 50,
+        bedNumber: 0,
       ),
       DataBase(
         hospitalName: "LMN",

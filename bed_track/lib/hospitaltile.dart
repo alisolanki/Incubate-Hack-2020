@@ -7,7 +7,7 @@ class DataTile extends StatefulWidget {
   final String address;
   final String imageURL;
   final String phoneNumber;
-  final int distance;
+  final double distance;
   DataTile({
     this.hospitalName,
     this.imageURL,
@@ -26,7 +26,7 @@ class _DataTileState extends State<DataTile> {
   String address;
   String imageURL;
   String phoneNumber;
-  int distance;
+  double distance;
   @override
   void initState() {
     super.initState();

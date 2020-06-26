@@ -2,6 +2,8 @@ import 'package:bedtrack/displaytile.dart';
 import 'package:bedtrack/hospitaltile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import './database/data.dart';
 import 'datafile.dart';
 
 class ShowHospital extends StatefulWidget {
@@ -10,45 +12,45 @@ class ShowHospital extends StatefulWidget {
 }
 
 class _ShowHospitalState extends State<ShowHospital> {
-//  List _dataList = Data().createData();
-  List<Data> _dataList = [
-    Data(
-      hospitalName: "XYZ",
-      imageURL:
-          "https://cdn.pixabay.com/photo/2016/04/19/13/22/hospital-1338585__340.jpg",
-      phoneNumber: "+912203340",
-      address: "mumbai",
-      bedNumber: 5,
-      distance: 2,
-    ),
-    Data(
-      hospitalName: "ABC",
-      imageURL:
-          "https://cdn.pixabay.com/photo/2016/11/06/10/35/hospital-1802679__340.jpg",
-      phoneNumber: "+912203340",
-      address: "mumbai",
-      bedNumber: 50,
-      distance: 2,
-    ),
-    Data(
-      hospitalName: "LMN",
-      imageURL:
-          "https://cdn.pixabay.com/photo/2015/09/07/15/12/care-928653__340.jpg",
-      phoneNumber: "+912203340",
-      address: "mumbai",
-      bedNumber: 11,
-      distance: 2,
-    ),
-    Data(
-      hospitalName: "PQR",
-      imageURL:
-          "https://cdn.pixabay.com/photo/2016/11/06/10/35/hospital-1802679__340.jpg",
-      phoneNumber: "+912203340",
-      address: "mumbai",
-      bedNumber: 5,
-      distance: 2,
-    )
-  ];
+  List<DataBase> _dataList = DataBase().getData();
+  // List<Data> _dataList = [
+  //   Data(
+  //     hospitalName: "XYZ",
+  //     imageURL:
+  //         "https://cdn.pixabay.com/photo/2016/04/19/13/22/hospital-1338585__340.jpg",
+  //     phoneNumber: "+912203340",
+  //     address: "mumbai",
+  //     bedNumber: 5,
+  //     distance: 2,
+  //   ),
+  //   Data(
+  //     hospitalName: "ABC",
+  //     imageURL:
+  //         "https://cdn.pixabay.com/photo/2016/11/06/10/35/hospital-1802679__340.jpg",
+  //     phoneNumber: "+912203340",
+  //     address: "mumbai",
+  //     bedNumber: 50,
+  //     distance: 2,
+  //   ),
+  //   Data(
+  //     hospitalName: "LMN",
+  //     imageURL:
+  //         "https://cdn.pixabay.com/photo/2015/09/07/15/12/care-928653__340.jpg",
+  //     phoneNumber: "+912203340",
+  //     address: "mumbai",
+  //     bedNumber: 11,
+  //     distance: 2,
+  //   ),
+  //   Data(
+  //     hospitalName: "PQR",
+  //     imageURL:
+  //         "https://cdn.pixabay.com/photo/2016/11/06/10/35/hospital-1802679__340.jpg",
+  //     phoneNumber: "+912203340",
+  //     address: "mumbai",
+  //     bedNumber: 5,
+  //     distance: 2,
+  //   )
+  // ];
   @override
   void initState() {
     super.initState();
@@ -60,7 +62,6 @@ class _ShowHospitalState extends State<ShowHospital> {
   bool openHero = false;
   @override
   Widget build(BuildContext context) {
-    print(_dataList[2].distance);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(),
@@ -83,7 +84,7 @@ class _ShowHospitalState extends State<ShowHospital> {
                 width: double.infinity,
                 child: Center(
                   child: Text(
-                    'NEARBY HOSPITALS ',
+                    'NEARBY HOSPITALS',
                     style: TextStyle(
                       shadows: <Shadow>[
                         Shadow(
@@ -111,46 +112,42 @@ class _ShowHospitalState extends State<ShowHospital> {
 //              ),
               Expanded(
                   child: Center(
-                child: ListView.builder(
-                    itemExtent: 200,
+                child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        childAspectRatio: 1, maxCrossAxisExtent: 400),
                     scrollDirection: Axis.vertical,
                     itemCount: _dataList.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 50.0,
-                        ),
-                        child: GestureDetector(
-                          child: Hero(
-                            tag: "$index",
-                            child: DisplayTile(
-                              imageURL: _dataList[index].imageURL,
-                              address: _dataList[index].address,
-                              bedNumber: _dataList[index].bedNumber,
-                              distance: _dataList[index].distance,
-                              hospitalName: _dataList[index].hospitalName,
-                              phoneNumber: _dataList[index].phoneNumber,
+                      return GestureDetector(
+                        child: Hero(
+                          tag: "$index",
+                          child: DisplayTile(
+                            imageURL: _dataList[index].imageURL,
+                            address: _dataList[index].location.address,
+                            bedNumber: _dataList[index].bedNumber,
+                            distance: 0.0,
+                            hospitalName: _dataList[index].hospitalName,
+                            phoneNumber: _dataList[index].phoneNumber,
 //                          displayHero: true,
-                            ),
                           ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (BuildContext context) {
-                                  return DataTile(
-                                    imageURL: _dataList[index].imageURL,
-                                    address: _dataList[index].address,
-                                    bedNumber: _dataList[index].bedNumber,
-                                    distance: _dataList[index].distance,
-                                    hospitalName: _dataList[index].hospitalName,
-                                    phoneNumber: _dataList[index].phoneNumber,
-                                  );
-                                },
-                              ),
-                            );
-                          },
                         ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) {
+                                return DataTile(
+                                  imageURL: _dataList[index].imageURL,
+                                  address: _dataList[index].location.address,
+                                  bedNumber: _dataList[index].bedNumber,
+                                  distance: 0.0,
+                                  hospitalName: _dataList[index].hospitalName,
+                                  phoneNumber: _dataList[index].phoneNumber,
+                                );
+                              },
+                            ),
+                          );
+                        },
                       );
                     }),
               )),

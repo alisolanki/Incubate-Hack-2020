@@ -12,8 +12,8 @@ class DisplayTile extends StatefulWidget {
   final String address;
   final String imageURL;
   final String phoneNumber;
-  final int distance;
-  bool displayHero;
+  final double distance;
+  final bool displayHero;
 
   DisplayTile(
       {this.hospitalName,
@@ -34,7 +34,7 @@ class _DisplayTileState extends State<DisplayTile> {
   String address;
   String imageURL;
   String phoneNumber;
-  int distance;
+  double distance;
   bool displayHero;
   void getData() {
     bedNumber = widget.bedNumber;
@@ -54,113 +54,142 @@ class _DisplayTileState extends State<DisplayTile> {
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+    var _height = MediaQuery.of(context).size.height;
+    var _width = MediaQuery.of(context).size.width;
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      height: 280,
-      width: width * 0.3,
+      margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: bedNumber == 0
+                ? [
+                    Colors.white,
+                    Colors.red,
+                  ]
+                : [
+                    Colors.white,
+                    Colors.green,
+                  ]),
+        color: bedNumber == 0 ? Colors.red : Colors.white,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 8, 30, 15),
-                height: 100,
-                width: 160,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: NetworkImage(imageURL),
-                      fit: BoxFit.fill,
-                    )),
+          Container(
+            height: 100,
+            width: 200,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(imageURL),
+                fit: BoxFit.cover,
               ),
-              Container(
-                margin: EdgeInsets.only(right: 10),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      distance.toString(),
-                      style:
-                          textStyle.copyWith(fontSize: 20, color: Colors.grey),
-                    ),
-                    Icon(
-                      Icons.location_on,
-                      color: Colors.grey,
-                    ),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.6),
+                    Colors.black.withOpacity(0)
                   ],
                 ),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
               ),
-            ],
+            ),
           ),
+          // Container(
+          //   margin: EdgeInsets.only(right: 10),
+          //   child: Row(
+          //     mainAxisSize: MainAxisSize.max,
+          //     mainAxisAlignment: MainAxisAlignment.start,
+          //     children: <Widget>[
+          //       Text(
+          //         distance.toString(),
+          //         style:
+          //             textStyle.copyWith(fontSize: 20, color: Colors.grey),
+          //       ),
+          //       Icon(
+          //         Icons.location_on,
+          //         color: Colors.grey,
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 5),
+            child: Center(
+              child: Text(
+                hospitalName,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+//               Container(
+//                 alignment: Alignment.centerRight,
+//                 decoration: BoxDecoration(
+//                   color: bedNumber > 10 ? Colors.green : Colors.red,
+//                   borderRadius: BorderRadius.circular(5),
+//                   boxShadow: [
+//                     BoxShadow(
+//                       color:
+//                           bedNumber > 10 ? Colors.green[100] : Colors.red[100],
+//                       spreadRadius: 5,
+//                       blurRadius: 10,
+// //                          blurRadius: 15,
+//                     )
+//                   ],
+//                 ),
+//               ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(bottom: 5),
-                child: Center(
-                  child: Text(
-                    hospitalName,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
+              Icon(
+                Icons.location_on,
+                color: Colors.white70,
               ),
-              Container(
-                alignment: Alignment.centerRight,
-                height: 10,
-                width: 10,
-                decoration: BoxDecoration(
-                  color: bedNumber > 10 ? Colors.green : Colors.red,
-                  borderRadius: BorderRadius.circular(5),
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          bedNumber > 10 ? Colors.green[100] : Colors.red[100],
-                      spreadRadius: 5,
-                      blurRadius: 10,
-//                          blurRadius: 15,
-                    )
-                  ],
-                ),
+              Text(
+                "$distance km",
+                style: TextStyle(color: Colors.black87),
               ),
+              
             ],
           ),
-          displayHero
-              ? Expanded(
-                  child: Text(
-                    "no of beds available = $bedNumber",
-                    style: textStyle,
-                  ),
-                )
-              : SizedBox(),
-          displayHero
-              ? Expanded(
-                  child: Text(
-                    address,
-                    style: textStyle,
-                  ),
-                )
-              : SizedBox(),
-          displayHero
-              ? Expanded(
-                  child: Text(
-                    phoneNumber,
-                    style: textStyle,
-                  ),
-                )
-              : SizedBox(),
+          // displayHero
+          //     ? Expanded(
+          //         child: Text(
+          //           "no of beds available = $bedNumber",
+          //           style: textStyle,
+          //         ),
+          //       )
+          //     : SizedBox(),
+          // displayHero
+          //     ? Expanded(
+          //         child: Text(
+          //           address,
+          //           style: textStyle,
+          //         ),
+          //       )
+          //     : SizedBox(),
+          // displayHero
+          //     ? Expanded(
+          //         child: Text(
+          //           phoneNumber,
+          //           style: textStyle,
+          //         ),
+          //       )
+          //     : SizedBox(),
         ],
       ),
     );

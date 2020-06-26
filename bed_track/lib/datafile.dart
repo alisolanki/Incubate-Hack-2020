@@ -24,12 +24,12 @@ class Data {
 List<Data> createData() {
   List<Data> returnData = [
     Data(
-      hospitalName: "XYZ",
+      hospitalName: "XYZD",
       imageURL:
           "https://cdn.pixabay.com/photo/2016/04/19/13/22/hospital-1338585__340.jpg",
       phoneNumber: "+912203340",
       address: "mumbai",
-      bedNumber: 50,
+      bedNumber: 0,
       distance: 2,
     ),
     Data(
