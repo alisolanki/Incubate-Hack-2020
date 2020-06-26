@@ -55,10 +55,10 @@ class _ShowHospitalState extends State<ShowHospital> {
                 ),
               ),
               Expanded(
-                  child: Center(
+                child: Center(
                 child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        childAspectRatio: 1, maxCrossAxisExtent: 400),
+                    childAspectRatio: 1, maxCrossAxisExtent: 400),
                     scrollDirection: Axis.vertical,
                     itemCount: _dataList.length,
                     itemBuilder: (BuildContext context, int index) {

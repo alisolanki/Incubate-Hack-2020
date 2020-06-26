@@ -2,10 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-TextStyle textStyle = TextStyle(
-  color: Colors.black,
-);
-
 class DisplayTile extends StatefulWidget {
   final int bedNumber;
   final String hospitalName;
@@ -56,7 +52,7 @@ class _DisplayTileState extends State<DisplayTile> {
     return Container(
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
-          color: Color(0xff303030),
+        color: Colors.grey[850],
 //        gradient: LinearGradient(
 //            begin: Alignment.topCenter,
 //            end: Alignment.bottomCenter,
@@ -70,14 +66,22 @@ class _DisplayTileState extends State<DisplayTile> {
 //                    Colors.green,
 //                  ]),
 //        color: bedNumber == 0 ? Colors.red : Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xff353535).withOpacity(1),
-              spreadRadius: 3,
-              blurRadius: 3,
-            )
-          ]),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 15.0,
+            offset: Offset(5.0, 5.0),
+            color: Colors.grey[900],
+            spreadRadius: 1.0,
+          ),
+          BoxShadow(
+            blurRadius: 15.0,
+            offset: Offset(-5.0, -5.0),
+            color: Colors.grey[800],
+            spreadRadius: 1.0,
+          )
+        ],
+      ),
       child: Column(
         children: <Widget>[
           Container(
