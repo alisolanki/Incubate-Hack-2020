@@ -1,20 +1,19 @@
+import 'package:bedtrack/models/place.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DataTile extends StatefulWidget {
   final int bedNumber;
   final String hospitalName;
-  final String address;
+  final PlaceLocation location;
   final String imageURL;
   final String phoneNumber;
-  final double distance;
   DataTile({
     this.hospitalName,
     this.imageURL,
-    this.address,
+    this.location,
     this.phoneNumber,
     this.bedNumber,
-    this.distance,
   });
   @override
   _DataTileState createState() => _DataTileState();
@@ -23,10 +22,9 @@ class DataTile extends StatefulWidget {
 class _DataTileState extends State<DataTile> {
   int bedNumber;
   String hospitalName;
-  String address;
+  PlaceLocation location;
   String imageURL;
   String phoneNumber;
-  double distance;
   @override
   void initState() {
     super.initState();
@@ -36,10 +34,9 @@ class _DataTileState extends State<DataTile> {
   void getData() {
     bedNumber = widget.bedNumber;
     hospitalName = widget.hospitalName;
-    address = widget.address;
+    location = widget.location;
     imageURL = widget.imageURL;
     phoneNumber = widget.phoneNumber;
-    distance = widget.distance;
   }
 
   @override
@@ -141,7 +138,7 @@ class _DataTileState extends State<DataTile> {
                           margin: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 10),
                           child: Text(
-                            address,
+                            location.address,
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                         ),
@@ -171,7 +168,7 @@ class _DataTileState extends State<DataTile> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              distance.toString(),
+                              "distance",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             ),

@@ -97,9 +97,8 @@ class _ShowHospitalState extends State<ShowHospital> {
                         key: ValueKey(_filteredhospitals[index].id),
                         child: DisplayTile(
                           imageURL: _filteredhospitals[index].imageURL,
-                          address: _filteredhospitals[index].location.address,
+                          location: _filteredhospitals[index].location,
                           bedNumber: _filteredhospitals[index].bedNumber,
-                          distance: 0.0,
                           hospitalName: _filteredhospitals[index].hospitalName,
                           phoneNumber: _filteredhospitals[index].phoneNumber,
                         ),
@@ -110,12 +109,10 @@ class _ShowHospitalState extends State<ShowHospital> {
                               builder: (BuildContext context) {
                                 return DataTile(
                                   imageURL: _filteredhospitals[index].imageURL,
-                                  address: _filteredhospitals[index]
-                                      .location
-                                      .address,
+                                  location: _filteredhospitals[index]
+                                      .location,
                                   bedNumber:
                                       _filteredhospitals[index].bedNumber,
-                                  distance: 0.0,
                                   hospitalName:
                                       _filteredhospitals[index].hospitalName,
                                   phoneNumber:

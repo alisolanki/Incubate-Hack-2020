@@ -1,3 +1,4 @@
+import 'package:bedtrack/models/place.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -5,18 +6,16 @@ import 'package:flutter/rendering.dart';
 class DisplayTile extends StatefulWidget {
   final int bedNumber;
   final String hospitalName;
-  final String address;
+  final PlaceLocation location;
   final String imageURL;
   final String phoneNumber;
-  final double distance;
 
   DisplayTile({
     this.hospitalName,
     this.imageURL,
-    this.address,
+    this.location,
     this.phoneNumber,
     this.bedNumber,
-    this.distance,
   });
 
   @override
@@ -26,17 +25,15 @@ class DisplayTile extends StatefulWidget {
 class _DisplayTileState extends State<DisplayTile> {
   int bedNumber;
   String hospitalName;
-  String address;
+  PlaceLocation location;
   String imageURL;
   String phoneNumber;
-  double distance;
   void getData() {
     bedNumber = widget.bedNumber;
     hospitalName = widget.hospitalName;
-    address = widget.address;
+    location = widget.location;
     imageURL = widget.imageURL;
     phoneNumber = widget.phoneNumber;
-    distance = widget.distance;
   }
 
   @override
@@ -198,7 +195,7 @@ class _DisplayTileState extends State<DisplayTile> {
                 color: Colors.white70,
               ),
               Text(
-                "$distance km",
+                "0.0 km",
                 style: TextStyle(color: Colors.white70),
               ),
             ],
