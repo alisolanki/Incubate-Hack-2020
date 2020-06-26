@@ -13,16 +13,15 @@ class DisplayTile extends StatefulWidget {
   final String imageURL;
   final String phoneNumber;
   final double distance;
-  final bool displayHero;
 
-  DisplayTile(
-      {this.hospitalName,
-      this.imageURL,
-      this.address,
-      this.phoneNumber,
-      this.bedNumber,
-      this.distance,
-      this.displayHero});
+  DisplayTile({
+    this.hospitalName,
+    this.imageURL,
+    this.address,
+    this.phoneNumber,
+    this.bedNumber,
+    this.distance,
+  });
 
   @override
   _DisplayTileState createState() => _DisplayTileState();
@@ -35,7 +34,6 @@ class _DisplayTileState extends State<DisplayTile> {
   String imageURL;
   String phoneNumber;
   double distance;
-  bool displayHero;
   void getData() {
     bedNumber = widget.bedNumber;
     hospitalName = widget.hospitalName;
@@ -43,7 +41,6 @@ class _DisplayTileState extends State<DisplayTile> {
     imageURL = widget.imageURL;
     phoneNumber = widget.phoneNumber;
     distance = widget.distance;
-    displayHero = widget.displayHero ?? false;
   }
 
   @override
@@ -77,35 +74,60 @@ class _DisplayTileState extends State<DisplayTile> {
       child: Column(
         children: <Widget>[
           Container(
-            height: 100,
-            width: 200,
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(imageURL),
-                fit: BoxFit.cover,
-              ),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
               ),
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [
+                  Colors.black.withOpacity(0.6),
+                  Colors.black.withOpacity(0)
+                ],
+              ),
             ),
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    Colors.black.withOpacity(0.6),
-                    Colors.black.withOpacity(0)
-                  ],
-                ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
+            child: Hero(
+              tag: "$hospitalName",
+              child: Image(
+                height: 100,
+                width: 200,
+                image: NetworkImage(imageURL),
+                fit: BoxFit.cover,
               ),
             ),
           ),
+          // Container(
+          //   height: 100,
+          //   width: 200,
+          //   decoration: BoxDecoration(
+          //     image: DecorationImage(
+          //       image: NetworkImage(imageURL),
+          //       fit: BoxFit.cover,
+          //     ),
+          //     borderRadius: BorderRadius.only(
+          //       topLeft: Radius.circular(10),
+          //       topRight: Radius.circular(10),
+          //     ),
+          //   ),
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //       gradient: LinearGradient(
+          //         begin: Alignment.bottomCenter,
+          //         end: Alignment.topCenter,
+          //         colors: [
+          //           Colors.black.withOpacity(0.6),
+          //           Colors.black.withOpacity(0)
+          //         ],
+          //       ),
+          //       borderRadius: BorderRadius.only(
+          //         topLeft: Radius.circular(10),
+          //         topRight: Radius.circular(10),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           // Container(
           //   margin: EdgeInsets.only(right: 10),
           //   child: Row(
@@ -163,33 +185,8 @@ class _DisplayTileState extends State<DisplayTile> {
                 "$distance km",
                 style: TextStyle(color: Colors.black87),
               ),
-              
             ],
           ),
-          // displayHero
-          //     ? Expanded(
-          //         child: Text(
-          //           "no of beds available = $bedNumber",
-          //           style: textStyle,
-          //         ),
-          //       )
-          //     : SizedBox(),
-          // displayHero
-          //     ? Expanded(
-          //         child: Text(
-          //           address,
-          //           style: textStyle,
-          //         ),
-          //       )
-          //     : SizedBox(),
-          // displayHero
-          //     ? Expanded(
-          //         child: Text(
-          //           phoneNumber,
-          //           style: textStyle,
-          //         ),
-          //       )
-          //     : SizedBox(),
         ],
       ),
     );

@@ -66,18 +66,13 @@ class _DataTileState extends State<DataTile> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        Container(
-                          height: 200,
-                          width: double.infinity,
-                          margin: EdgeInsets.only(bottom: 30),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: NetworkImage(
-                                imageURL,
-                              ),
-                            ),
+                        Hero(
+                          tag: hospitalName,
+                          child: Image(
+                            height: height * 0.25,
+                            width: double.infinity,
+                            image: NetworkImage(imageURL),
+                            fit: BoxFit.cover,
                           ),
                         ),
                         Row(
@@ -103,20 +98,19 @@ class _DataTileState extends State<DataTile> {
                               height: 10,
                               width: 10,
                               decoration: BoxDecoration(
-                                  color: bedNumber > 10
-                                      ? Colors.green
-                                      : Colors.red,
-                                  borderRadius: BorderRadius.circular(5),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: bedNumber > 10
-                                          ? Colors.green[100]
-                                          : Colors.red[100],
-                                      spreadRadius: 5,
-                                      blurRadius: 10,
-//                          blurRadius: 15,
-                                    )
-                                  ]),
+                                color:
+                                    bedNumber > 10 ? Colors.green : Colors.red,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: bedNumber > 10
+                                        ? Colors.green[100]
+                                        : Colors.red[100],
+                                    spreadRadius: 5,
+                                    blurRadius: 10,
+                                  )
+                                ],
+                              ),
                             )
                           ],
                         ),

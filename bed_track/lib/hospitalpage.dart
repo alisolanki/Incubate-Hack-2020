@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import './database/data.dart';
-import 'datafile.dart';
 
 class ShowHospital extends StatefulWidget {
   @override
@@ -13,53 +12,7 @@ class ShowHospital extends StatefulWidget {
 
 class _ShowHospitalState extends State<ShowHospital> {
   List<DataBase> _dataList = DataBase().getData();
-  // List<Data> _dataList = [
-  //   Data(
-  //     hospitalName: "XYZ",
-  //     imageURL:
-  //         "https://cdn.pixabay.com/photo/2016/04/19/13/22/hospital-1338585__340.jpg",
-  //     phoneNumber: "+912203340",
-  //     address: "mumbai",
-  //     bedNumber: 5,
-  //     distance: 2,
-  //   ),
-  //   Data(
-  //     hospitalName: "ABC",
-  //     imageURL:
-  //         "https://cdn.pixabay.com/photo/2016/11/06/10/35/hospital-1802679__340.jpg",
-  //     phoneNumber: "+912203340",
-  //     address: "mumbai",
-  //     bedNumber: 50,
-  //     distance: 2,
-  //   ),
-  //   Data(
-  //     hospitalName: "LMN",
-  //     imageURL:
-  //         "https://cdn.pixabay.com/photo/2015/09/07/15/12/care-928653__340.jpg",
-  //     phoneNumber: "+912203340",
-  //     address: "mumbai",
-  //     bedNumber: 11,
-  //     distance: 2,
-  //   ),
-  //   Data(
-  //     hospitalName: "PQR",
-  //     imageURL:
-  //         "https://cdn.pixabay.com/photo/2016/11/06/10/35/hospital-1802679__340.jpg",
-  //     phoneNumber: "+912203340",
-  //     address: "mumbai",
-  //     bedNumber: 5,
-  //     distance: 2,
-  //   )
-  // ];
-  @override
-  void initState() {
-    super.initState();
-//    _dataList = createData();
-    print("hello");
-    print(_dataList);
-  }
 
-  bool openHero = false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -73,7 +26,7 @@ class _ShowHospitalState extends State<ShowHospital> {
           backgroundColor: Colors.grey,
           elevation: 0,
           highlightElevation: 0,
-          child: Icon(Icons.filter_none),
+          child: Icon(Icons.filter_list),
         ),
         body: SafeArea(
           child: Column(
@@ -101,15 +54,6 @@ class _ShowHospitalState extends State<ShowHospital> {
                   ),
                 ),
               ),
-//              DisplayTile(
-//                imageURL: _dataList[0].imageURL,
-//                address: _dataList[0].address,
-//                bedNumber: _dataList[0].bedNumber,
-//                distance: _dataList[0].distance,
-//                hospitalName: _dataList[0].hospitalName,
-//                phoneNumber: _dataList[0].phoneNumber,
-//                displayHero: true,
-//              ),
               Expanded(
                   child: Center(
                 child: GridView.builder(
@@ -119,17 +63,13 @@ class _ShowHospitalState extends State<ShowHospital> {
                     itemCount: _dataList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
-                        child: Hero(
-                          tag: "$index",
-                          child: DisplayTile(
-                            imageURL: _dataList[index].imageURL,
-                            address: _dataList[index].location.address,
-                            bedNumber: _dataList[index].bedNumber,
-                            distance: 0.0,
-                            hospitalName: _dataList[index].hospitalName,
-                            phoneNumber: _dataList[index].phoneNumber,
-//                          displayHero: true,
-                          ),
+                        child: DisplayTile(
+                          imageURL: _dataList[index].imageURL,
+                          address: _dataList[index].location.address,
+                          bedNumber: _dataList[index].bedNumber,
+                          distance: 0.0,
+                          hospitalName: _dataList[index].hospitalName,
+                          phoneNumber: _dataList[index].phoneNumber,
                         ),
                         onTap: () {
                           Navigator.push(
@@ -158,4 +98,3 @@ class _ShowHospitalState extends State<ShowHospital> {
     );
   }
 }
-//TODO:add the hero navigator
