@@ -2,8 +2,8 @@ import '../models/place.dart';
 
 class DataBase {
   int id;
-  int bedNumber;
   String hospitalName;
+  int bedNumber;
   String imageURL;
   String phoneNumber;
   PlaceLocation location;
