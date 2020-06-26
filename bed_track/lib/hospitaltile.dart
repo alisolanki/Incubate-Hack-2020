@@ -54,15 +54,17 @@ class _DataTileState extends State<DataTile> {
             height: 0.9 * height,
             width: 0.9 * width,
             decoration: BoxDecoration(
-                color: Color(0xff404040),
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    spreadRadius: 3,
-                    blurRadius: 3,
-                  )
-                ]),
+              color: Colors.grey[850],
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 15.0,
+                  offset: Offset(4.0, 4.0),
+                  color: Colors.black,
+                  spreadRadius: 1.0,
+                ),
+              ],
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.end,

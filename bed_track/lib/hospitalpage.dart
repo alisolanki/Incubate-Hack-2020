@@ -1,5 +1,7 @@
+import 'package:bedtrack/calculators/user_location.dart';
 import 'package:bedtrack/displaytile.dart';
 import 'package:bedtrack/hospitaltile.dart';
+import 'package:bedtrack/models/place.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,7 @@ class ShowHospital extends StatefulWidget {
 
 class _ShowHospitalState extends State<ShowHospital> {
   List<DataBase> _dataList = DataBase().getData();
+  Future<PlaceLocation> _user = getLocation();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,7 @@ class _ShowHospitalState extends State<ShowHospital> {
                 width: double.infinity,
                 child: Center(
                   child: Text(
-                    'NEARBY HOSPITALS',
+                    'HOSPITALS',
                     style: TextStyle(
                       shadows: <Shadow>[
                         Shadow(
@@ -45,7 +48,7 @@ class _ShowHospitalState extends State<ShowHospital> {
                           offset: Offset(1, 1),
                         ),
                       ],
-                      fontSize: 30,
+                      fontSize: 35,
                       wordSpacing: 10,
                       letterSpacing: 10,
                       fontWeight: FontWeight.w500,
@@ -54,11 +57,21 @@ class _ShowHospitalState extends State<ShowHospital> {
                   ),
                 ),
               ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(bottom: 8.0, left: 8.0, right: 8.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: "Search Hospitals",
+                    icon: Icon(Icons.search),
+                  ),
+                ),
+              ),
               Expanded(
-                child: Center(
+                  child: Center(
                 child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    childAspectRatio: 1, maxCrossAxisExtent: 400),
+                        childAspectRatio: 1, maxCrossAxisExtent: 400),
                     scrollDirection: Axis.vertical,
                     itemCount: _dataList.length,
                     itemBuilder: (BuildContext context, int index) {

@@ -70,13 +70,13 @@ class _DisplayTileState extends State<DisplayTile> {
         boxShadow: [
           BoxShadow(
             blurRadius: 15.0,
-            offset: Offset(5.0, 5.0),
+            offset: Offset(4.0, 4.0),
             color: Colors.grey[900],
             spreadRadius: 1.0,
           ),
           BoxShadow(
-            blurRadius: 15.0,
-            offset: Offset(-5.0, -5.0),
+            blurRadius: 13.0,
+            offset: Offset(-4.0, -4.0),
             color: Colors.grey[800],
             spreadRadius: 1.0,
           )
@@ -105,11 +105,12 @@ class _DisplayTileState extends State<DisplayTile> {
                 height: 100,
                 width: 200,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: NetworkImage(imageURL),
-                      fit: BoxFit.fill,
-                    )),
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    image: NetworkImage(imageURL),
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
             ),
           ),
