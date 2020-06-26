@@ -49,13 +49,13 @@ class _DataTileState extends State<DataTile> {
     return Scaffold(
       body: Center(
         child: Container(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(0),
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             height: 0.9 * height,
             width: 0.9 * width,
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
+              color: Colors.black87,
+              borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -66,23 +66,36 @@ class _DataTileState extends State<DataTile> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
+                        Container(
+                          height: 200,
+                          width: double.infinity,
+                          margin: EdgeInsets.only(bottom: 30),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: NetworkImage(
+                                imageURL,
+                              ),
+                            ),
+                          ),
+                        ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Container(
-                              height: 150,
-                              width: 250,
-                              margin: EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: NetworkImage(
-                                    imageURL,
-                                  ),
+                              margin: EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                hospitalName,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
+                            ),
+                            SizedBox(
+                              width: 20,
                             ),
                             Container(
                               margin: EdgeInsets.only(left: 27),
@@ -108,23 +121,12 @@ class _DataTileState extends State<DataTile> {
                           ],
                         ),
                         Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
-                          child: Text(
-                            hospitalName,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 40,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        Container(
                           margin: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 10),
                           child: Text(
                             "number of beds available = $bedNumber",
                             style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                               fontSize: 20,
                             ),
                           ),
@@ -134,7 +136,7 @@ class _DataTileState extends State<DataTile> {
                               vertical: 10, horizontal: 10),
                           child: Text(
                             address,
-                            style: TextStyle(color: Colors.black, fontSize: 20),
+                            style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                         ),
                         Row(
@@ -142,7 +144,7 @@ class _DataTileState extends State<DataTile> {
                           children: <Widget>[
                             Icon(
                               Icons.phone,
-                              color: Colors.black,
+                              color: Colors.white,
                               size: 20,
                             ),
                             Container(
@@ -151,7 +153,7 @@ class _DataTileState extends State<DataTile> {
                               child: Text(
                                 phoneNumber,
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 20),
+                                    color: Colors.white, fontSize: 20),
                               ),
                             ),
                           ],
@@ -165,7 +167,7 @@ class _DataTileState extends State<DataTile> {
                             Text(
                               distance.toString(),
                               style:
-                                  TextStyle(color: Colors.black, fontSize: 20),
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
                             SizedBox(
                               width: 10,
