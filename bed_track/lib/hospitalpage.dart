@@ -15,6 +15,8 @@ class ShowHospital extends StatefulWidget {
 class _ShowHospitalState extends State<ShowHospital> {
   List<DataBase> _dataList, _filteredhospitals;
   Future<PlaceLocation> _user = getLocation();
+  bool openSort = false;
+  bool avabed = false, closest = false, oxytanks = false, venti = false;
 
   @override
   void initState() {
@@ -31,12 +33,14 @@ class _ShowHospitalState extends State<ShowHospital> {
       home: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            //TODO: Add filter actions
+            setState(() {
+              openSort = !openSort;
+            });
           },
           backgroundColor: Colors.grey,
           elevation: 0,
           highlightElevation: 0,
-          child: Icon(Icons.filter_list),
+          child: Icon(openSort ? Icons.keyboard_return : Icons.filter_list),
         ),
         body: SafeArea(
           child: Column(
@@ -109,8 +113,7 @@ class _ShowHospitalState extends State<ShowHospital> {
                               builder: (BuildContext context) {
                                 return DataTile(
                                   imageURL: _filteredhospitals[index].imageURL,
-                                  location: _filteredhospitals[index]
-                                      .location,
+                                  location: _filteredhospitals[index].location,
                                   bedNumber:
                                       _filteredhospitals[index].bedNumber,
                                   hospitalName:
@@ -125,6 +128,151 @@ class _ShowHospitalState extends State<ShowHospital> {
                       );
                     }),
               )),
+              Container(
+                color: Color(0xff0404040),
+                alignment: Alignment.centerRight,
+                child: Visibility(
+                    visible: openSort,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Sort by : ",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          color: Colors.black,
+                          height: 1,
+                          width: 200,
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            setState(() {
+                              avabed = !avabed;
+                            });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text(
+                                "number of beds available    ",
+                                style: TextStyle(
+                                  color: avabed ? Colors.white : Colors.grey,
+                                ),
+                              ),
+                              Icon(
+                                avabed
+                                    ? Icons.check_box
+                                    : Icons.check_box_outline_blank,
+                                color: avabed ? Colors.white : Colors.grey,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          color: Colors.grey,
+                          height: 0,
+                          width: 200,
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            setState(() {
+                              oxytanks = !oxytanks;
+                            });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text(
+                                "Availability of Oxygen tanks ",
+                                style: TextStyle(
+                                  color: oxytanks ? Colors.white : Colors.grey,
+                                ),
+                              ),
+                              Icon(
+                                oxytanks
+                                    ? Icons.check_box
+                                    : Icons.check_box_outline_blank,
+                                color: oxytanks ? Colors.white : Colors.grey,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          color: Colors.grey,
+                          height: 0,
+                          width: 200,
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            setState(() {
+                              venti = !venti;
+                            });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text(
+                                "Availability of Ventilators    ",
+                                style: TextStyle(
+                                  color: venti ? Colors.white : Colors.grey,
+                                ),
+                              ),
+                              Icon(
+                                venti
+                                    ? Icons.check_box
+                                    : Icons.check_box_outline_blank,
+                                color: venti ? Colors.white : Colors.grey,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          color: Colors.grey,
+                          height: 0,
+                          width: 200,
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            setState(() {
+                              closest = !closest;
+                            });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text(
+                                "Closest hospital                   ",
+                                style: TextStyle(
+                                  color: closest ? Colors.white : Colors.grey,
+                                ),
+                              ),
+                              Icon(
+                                closest
+                                    ? Icons.check_box
+                                    : Icons.check_box_outline_blank,
+                                color: closest ? Colors.white : Colors.grey,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          color: Colors.grey,
+                          height: 0,
+                          width: 200,
+                        ),
+                      ],
+                    )),
+              )
             ],
           ),
         ),
