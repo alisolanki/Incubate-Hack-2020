@@ -1,6 +1,7 @@
 import '../models/place.dart';
 
 class DataBase {
+  int id;
   int bedNumber;
   String hospitalName;
   String imageURL;
@@ -8,12 +9,13 @@ class DataBase {
   PlaceLocation location;
 
   DataBase(
-      {this.hospitalName,
+      {this.id,this.hospitalName,
       this.imageURL,
       this.phoneNumber,
       this.bedNumber,
       this.location});
 
+  int getid() => this.id;
   String gethospitalName() => this.hospitalName;
   String getImageUrl() => this.imageURL;
   String getPhone() => this.phoneNumber;
@@ -23,6 +25,7 @@ class DataBase {
   List<DataBase> getData() {
     List<DataBase> returnData = [
       DataBase(
+        id: 0,
         hospitalName: "XYZ",
         imageURL:
             "https://cdn.pixabay.com/photo/2016/04/19/13/22/hospital-1338585__340.jpg",
@@ -31,6 +34,7 @@ class DataBase {
         bedNumber: 50,
       ),
       DataBase(
+        id: 1,
         hospitalName: "ABCD",
         imageURL:
             "https://cdn.pixabay.com/photo/2016/11/06/10/35/hospital-1802679__340.jpg",
@@ -39,6 +43,7 @@ class DataBase {
         bedNumber: 0,
       ),
       DataBase(
+        id: 2,
         hospitalName: "LMN",
         imageURL:
             "https://cdn.pixabay.com/photo/2015/09/07/15/12/care-928653__340.jpg",
@@ -47,6 +52,7 @@ class DataBase {
         bedNumber: 50,
       ),
       DataBase(
+        id: 3,
         hospitalName: "PQR",
         imageURL:
             "https://cdn.pixabay.com/photo/2016/11/06/10/35/hospital-1802679__340.jpg",

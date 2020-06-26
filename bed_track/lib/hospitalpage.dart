@@ -13,8 +13,15 @@ class ShowHospital extends StatefulWidget {
 }
 
 class _ShowHospitalState extends State<ShowHospital> {
-  List<DataBase> _dataList = DataBase().getData();
+  List<DataBase> _dataList, _filteredhospitals;
   Future<PlaceLocation> _user = getLocation();
+
+  @override
+  void initState() {
+    _dataList = DataBase().getData();
+    _filteredhospitals = _dataList;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +72,17 @@ class _ShowHospitalState extends State<ShowHospital> {
                     hintText: "Search Hospitals",
                     icon: Icon(Icons.search),
                   ),
+                  onChanged: (text) {
+                    setState(() {
+                      _filteredhospitals = _dataList
+                          .where(
+                            (element) => (element.hospitalName
+                                .toLowerCase()
+                                .contains(text.toLowerCase())),
+                          )
+                          .toList();
+                    });
+                  },
                 ),
               ),
               Expanded(
@@ -73,16 +91,17 @@ class _ShowHospitalState extends State<ShowHospital> {
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         childAspectRatio: 1, maxCrossAxisExtent: 400),
                     scrollDirection: Axis.vertical,
-                    itemCount: _dataList.length,
+                    itemCount: _filteredhospitals.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
+                        key: ValueKey(_filteredhospitals[index].id),
                         child: DisplayTile(
-                          imageURL: _dataList[index].imageURL,
-                          address: _dataList[index].location.address,
-                          bedNumber: _dataList[index].bedNumber,
+                          imageURL: _filteredhospitals[index].imageURL,
+                          address: _filteredhospitals[index].location.address,
+                          bedNumber: _filteredhospitals[index].bedNumber,
                           distance: 0.0,
-                          hospitalName: _dataList[index].hospitalName,
-                          phoneNumber: _dataList[index].phoneNumber,
+                          hospitalName: _filteredhospitals[index].hospitalName,
+                          phoneNumber: _filteredhospitals[index].phoneNumber,
                         ),
                         onTap: () {
                           Navigator.push(
@@ -90,12 +109,17 @@ class _ShowHospitalState extends State<ShowHospital> {
                             MaterialPageRoute<void>(
                               builder: (BuildContext context) {
                                 return DataTile(
-                                  imageURL: _dataList[index].imageURL,
-                                  address: _dataList[index].location.address,
-                                  bedNumber: _dataList[index].bedNumber,
+                                  imageURL: _filteredhospitals[index].imageURL,
+                                  address: _filteredhospitals[index]
+                                      .location
+                                      .address,
+                                  bedNumber:
+                                      _filteredhospitals[index].bedNumber,
                                   distance: 0.0,
-                                  hospitalName: _dataList[index].hospitalName,
-                                  phoneNumber: _dataList[index].phoneNumber,
+                                  hospitalName:
+                                      _filteredhospitals[index].hospitalName,
+                                  phoneNumber:
+                                      _filteredhospitals[index].phoneNumber,
                                 );
                               },
                             ),
