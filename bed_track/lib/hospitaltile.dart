@@ -54,9 +54,15 @@ class _DataTileState extends State<DataTile> {
             height: 0.9 * height,
             width: 0.9 * width,
             decoration: BoxDecoration(
-              color: Colors.black87,
-              borderRadius: BorderRadius.circular(20),
-            ),
+                color: Color(0xff404040),
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 3,
+                    blurRadius: 3,
+                  )
+                ]),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -68,11 +74,15 @@ class _DataTileState extends State<DataTile> {
                       children: <Widget>[
                         Hero(
                           tag: hospitalName,
-                          child: Image(
+                          child: Container(
                             height: height * 0.25,
                             width: double.infinity,
-                            image: NetworkImage(imageURL),
-                            fit: BoxFit.cover,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: NetworkImage(imageURL),
+                                  fit: BoxFit.cover,
+                                ),
+                                borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
                         Row(

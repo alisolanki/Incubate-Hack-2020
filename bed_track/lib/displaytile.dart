@@ -56,21 +56,28 @@ class _DisplayTileState extends State<DisplayTile> {
     return Container(
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: bedNumber == 0
-                ? [
-                    Colors.white,
-                    Colors.red,
-                  ]
-                : [
-                    Colors.white,
-                    Colors.green,
-                  ]),
-        color: bedNumber == 0 ? Colors.red : Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
+          color: Color(0xff303030),
+//        gradient: LinearGradient(
+//            begin: Alignment.topCenter,
+//            end: Alignment.bottomCenter,
+//            colors: bedNumber == 0
+//                ? [
+//                    Colors.white,
+//                    Colors.red,
+//                  ]
+//                : [
+//                    Colors.white,
+//                    Colors.green,
+//                  ]),
+//        color: bedNumber == 0 ? Colors.red : Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xff353535).withOpacity(1),
+              spreadRadius: 3,
+              blurRadius: 3,
+            )
+          ]),
       child: Column(
         children: <Widget>[
           Container(
@@ -90,11 +97,15 @@ class _DisplayTileState extends State<DisplayTile> {
             ),
             child: Hero(
               tag: "$hospitalName",
-              child: Image(
+              child: Container(
                 height: 100,
                 width: 200,
-                image: NetworkImage(imageURL),
-                fit: BoxFit.cover,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: NetworkImage(imageURL),
+                      fit: BoxFit.fill,
+                    )),
               ),
             ),
           ),
@@ -152,7 +163,7 @@ class _DisplayTileState extends State<DisplayTile> {
               child: Text(
                 hospitalName,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),
@@ -183,7 +194,7 @@ class _DisplayTileState extends State<DisplayTile> {
               ),
               Text(
                 "$distance km",
-                style: TextStyle(color: Colors.black87),
+                style: TextStyle(color: Colors.white70),
               ),
             ],
           ),
