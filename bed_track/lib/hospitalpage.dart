@@ -175,48 +175,26 @@ class _ShowHospitalState extends State<ShowHospital> {
                 ),
               ),
               Expanded(
-                child: Center(
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      childAspectRatio: 1,
-                      maxCrossAxisExtent: 400,
-                    ),
-                    scrollDirection: Axis.vertical,
-                    itemCount: _filteredhospitals.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        key: ValueKey(_filteredhospitals[index].id),
-                        child: DisplayTile(
-                          imageURL: _filteredhospitals[index].imageURL,
-                          location: _filteredhospitals[index].location,
-                          bedNumber: _filteredhospitals[index].bedNumber,
-                          hospitalName: _filteredhospitals[index].hospitalName,
-                          phoneNumber: _filteredhospitals[index].phoneNumber,
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) {
-                                return DataTile(
-                                  imageURL: _filteredhospitals[index].imageURL,
-                                  location: _filteredhospitals[index].location,
-                                  bedNumber:
-                                      _filteredhospitals[index].bedNumber,
-                                  hospitalName:
-                                      _filteredhospitals[index].hospitalName,
-                                  phoneNumber:
-                                      _filteredhospitals[index].phoneNumber,
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      );
-                    },
+                  child: Center(
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    childAspectRatio: 1,
+                    maxCrossAxisExtent: 400,
                   ),
+                  scrollDirection: Axis.vertical,
+                  itemCount: _filteredhospitals.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return DisplayTile(
+                      id: _filteredhospitals[index].id,
+                      imageURL: _filteredhospitals[index].imageURL,
+                      location: _filteredhospitals[index].location,
+                      bedNumber: _filteredhospitals[index].bedNumber,
+                      hospitalName: _filteredhospitals[index].hospitalName,
+                      phoneNumber: _filteredhospitals[index].phoneNumber,
+                    );
+                  },
                 ),
-              ),
+              )),
             ],
           ),
         ),
