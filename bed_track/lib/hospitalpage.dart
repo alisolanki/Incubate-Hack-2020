@@ -13,17 +13,19 @@ class ShowHospital extends StatefulWidget {
 }
 
 class _ShowHospitalState extends State<ShowHospital> {
-  List<DataBaseTemplate> _filteredhospitals = [];
+  List<DataBaseTemplate> _filteredhospitals;
   // Future<PlaceLocation> _user = getLocation();
   bool _sorted = false;
   bool _isInit = true;
+  List<DataBaseTemplate> _dataList;
   var distance;
 
   @override
   void didChangeDependencies() {
     if (_isInit) {
       Provider.of<HospitalDataProvider>(context).fetchData();
-      _filteredhospitals = Provider.of<HospitalDataProvider>(context).datalist;
+      _dataList = Provider.of<HospitalDataProvider>(context).datalist;
+      _filteredhospitals = _dataList;
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -31,8 +33,7 @@ class _ShowHospitalState extends State<ShowHospital> {
 
   @override
   Widget build(BuildContext context) {
-    List<DataBaseTemplate> _dataList =
-        Provider.of<HospitalDataProvider>(context).datalist;
+    _dataList = Provider.of<HospitalDataProvider>(context).datalist;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(),
@@ -176,44 +177,44 @@ class _ShowHospitalState extends State<ShowHospital> {
               Expanded(
                 child: Center(
                   child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          childAspectRatio: 1, maxCrossAxisExtent: 400),
-                      scrollDirection: Axis.vertical,
-                      itemCount: _filteredhospitals.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          key: ValueKey(_filteredhospitals[index].id),
-                          child: DisplayTile(
-                            imageURL: _filteredhospitals[index].imageURL,
-                            location: _filteredhospitals[index].location,
-                            bedNumber: _filteredhospitals[index].bedNumber,
-                            hospitalName:
-                                _filteredhospitals[index].hospitalName,
-                            phoneNumber: _filteredhospitals[index].phoneNumber,
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (BuildContext context) {
-                                  return DataTile(
-                                    imageURL:
-                                        _filteredhospitals[index].imageURL,
-                                    location:
-                                        _filteredhospitals[index].location,
-                                    bedNumber:
-                                        _filteredhospitals[index].bedNumber,
-                                    hospitalName:
-                                        _filteredhospitals[index].hospitalName,
-                                    phoneNumber:
-                                        _filteredhospitals[index].phoneNumber,
-                                  );
-                                },
-                              ),
-                            );
-                          },
-                        );
-                      }),
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      childAspectRatio: 1,
+                      maxCrossAxisExtent: 400,
+                    ),
+                    scrollDirection: Axis.vertical,
+                    itemCount: _filteredhospitals.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        key: ValueKey(_filteredhospitals[index].id),
+                        child: DisplayTile(
+                          imageURL: _filteredhospitals[index].imageURL,
+                          location: _filteredhospitals[index].location,
+                          bedNumber: _filteredhospitals[index].bedNumber,
+                          hospitalName: _filteredhospitals[index].hospitalName,
+                          phoneNumber: _filteredhospitals[index].phoneNumber,
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) {
+                                return DataTile(
+                                  imageURL: _filteredhospitals[index].imageURL,
+                                  location: _filteredhospitals[index].location,
+                                  bedNumber:
+                                      _filteredhospitals[index].bedNumber,
+                                  hospitalName:
+                                      _filteredhospitals[index].hospitalName,
+                                  phoneNumber:
+                                      _filteredhospitals[index].phoneNumber,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
