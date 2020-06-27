@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: AssetImage("images/ic_launcher.png"),
+                  image: AssetImage("images/splash.png"),
                 )),
                 margin: EdgeInsets.symmetric(vertical: 20),
 //                  Image.asset("images/ic_launcher.png"),
@@ -41,11 +41,21 @@ class _HomeState extends State<Home> {
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    child: Text(
-                      'Enter',
-                      style: TextStyle(
-                        fontSize: 25,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text(
+                          'Enter',
+                          style: TextStyle(
+                            fontSize: 25,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(Icons.arrow_forward_ios)
+                      ],
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
