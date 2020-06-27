@@ -43,7 +43,6 @@ class _DataTileState extends State<DataTile> {
     distance = widget.distance;
   }
 
-<<<<<<< HEAD
   Future<void> distanceCalculate(PlaceLocation location) async {
     try {
       Position _user = await Geolocator()
@@ -55,29 +54,12 @@ class _DataTileState extends State<DataTile> {
       throw (error);
     }
   }
-=======
-  // Future<void> distanceCalculate(PlaceLocation location) async {
-  //   try {
-  //     Position _user = await Geolocator()
-  //         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  //     print("${_user.longitude} + ${_user.latitude}");
-  //     distance = await Geolocator().distanceBetween(_user.latitude,
-  //         _user.longitude, location.latitude, location.longitude);
-  //   } catch (error) {
-  //     throw (error);
-  //   }
-  // }
->>>>>>> Done almost
 
   
   @override
   void initState() {
     getData();
-<<<<<<< HEAD
     distanceCalculate(location);
-=======
-    // distanceCalculate(location);
->>>>>>> Done almost
     super.initState();
   }
 

@@ -65,10 +65,6 @@ class _DisplayTileState extends State<DisplayTile> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-=======
-    // distance = distanceData;
->>>>>>> Done almost
     return GestureDetector(
       key: ValueKey(id),
       child: Container(
@@ -145,11 +141,7 @@ class _DisplayTileState extends State<DisplayTile> {
                   color: Colors.white70,
                 ),
                 Text(
-<<<<<<< HEAD
-                  "${distance.toInt() / 1000} km",
-=======
                   "${distance} km",
->>>>>>> Done almost
                   style: TextStyle(color: Colors.white70),
                 ),
               ],
@@ -169,11 +161,7 @@ class _DisplayTileState extends State<DisplayTile> {
                 bedNumber: bedNumber,
                 hospitalName: hospitalName,
                 phoneNumber: phoneNumber,
-<<<<<<< HEAD
-                distance: distance,
-=======
                 distance: 1.0,
->>>>>>> Done almost
               );
             },
           ),
