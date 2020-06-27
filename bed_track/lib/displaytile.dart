@@ -30,6 +30,7 @@ class _DisplayTileState extends State<DisplayTile> {
   String imageURL;
   String phoneNumber;
   double distance;
+
   void getData() {
     bedNumber = widget.bedNumber;
     hospitalName = widget.hospitalName;
@@ -52,8 +53,10 @@ class _DisplayTileState extends State<DisplayTile> {
 
   @override
   void initState() {
-    getData();
-    distanceCalculate(widget.location);
+    setState(() {
+      getData();
+      distanceCalculate(widget.location);
+    });
     super.initState();
   }
 
