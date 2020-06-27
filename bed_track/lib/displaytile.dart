@@ -53,10 +53,8 @@ class _DisplayTileState extends State<DisplayTile> {
 
   @override
   void initState() {
-    setState(() {
-      getData();
-      distanceCalculate(widget.location);
-    });
+    getData();
+    distanceCalculate(widget.location);
     super.initState();
   }
 
