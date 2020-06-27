@@ -200,7 +200,7 @@ class _DisplayTileState extends State<DisplayTile> {
                 color: Colors.white70,
               ),
               Text(
-                "$distance km",
+                "${distance.toInt()/1000} km",
                 style: TextStyle(color: Colors.white70),
               ),
             ],
