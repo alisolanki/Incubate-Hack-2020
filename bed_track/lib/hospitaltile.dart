@@ -1,6 +1,7 @@
 import 'package:bedtrack/models/place.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class DataTile extends StatefulWidget {
   final int bedNumber;
@@ -25,10 +26,12 @@ class _DataTileState extends State<DataTile> {
   PlaceLocation location;
   String imageURL;
   String phoneNumber;
+  var distance;
+  
   @override
   void initState() {
-    super.initState();
     getData();
+    super.initState();
   }
 
   void getData() {
@@ -84,52 +87,32 @@ class _DataTileState extends State<DataTile> {
                                 borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 10),
-                              child: Text(
-                                hospitalName,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          child: Text(
+                            hospitalName,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w500,
                             ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 27),
-                              alignment: Alignment.centerRight,
-                              height: 10,
-                              width: 10,
-                              decoration: BoxDecoration(
-                                color:
-                                    bedNumber > 10 ? Colors.green : Colors.red,
-                                borderRadius: BorderRadius.circular(5),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: bedNumber > 10
-                                        ? Colors.green[100]
-                                        : Colors.red[100],
-                                    spreadRadius: 5,
-                                    blurRadius: 10,
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
+                            softWrap: true,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
                         ),
                         Container(
                           margin: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 10),
                           child: Text(
-                            "number of beds available = $bedNumber",
+                            "Beds available = ${bedNumber.toString()}",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: bedNumber == 0
+                                  ? Colors.red
+                                  : bedNumber <= 10
+                                      ? Colors.yellow
+                                      : Colors.green,
                               fontSize: 20,
                             ),
                           ),
@@ -138,7 +121,7 @@ class _DataTileState extends State<DataTile> {
                           margin: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 10),
                           child: Text(
-                            location.address,
+                            "${location.address}",
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                         ),
@@ -154,7 +137,7 @@ class _DataTileState extends State<DataTile> {
                               margin: EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 10),
                               child: Text(
-                                phoneNumber,
+                                phoneNumber.toString(),
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 20),
                               ),
@@ -168,7 +151,7 @@ class _DataTileState extends State<DataTile> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              "distance",
+                              "$distance",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             ),
@@ -181,7 +164,7 @@ class _DataTileState extends State<DataTile> {
                               size: 20,
                             )
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),

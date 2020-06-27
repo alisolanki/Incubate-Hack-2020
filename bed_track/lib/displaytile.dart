@@ -2,6 +2,7 @@ import 'package:bedtrack/models/place.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:geolocator/geolocator.dart';
 
 class DisplayTile extends StatefulWidget {
   final int bedNumber;
@@ -28,6 +29,7 @@ class _DisplayTileState extends State<DisplayTile> {
   PlaceLocation location;
   String imageURL;
   String phoneNumber;
+  double distance;
   void getData() {
     bedNumber = widget.bedNumber;
     hospitalName = widget.hospitalName;
@@ -36,33 +38,31 @@ class _DisplayTileState extends State<DisplayTile> {
     phoneNumber = widget.phoneNumber;
   }
 
+  Future<void> distanceCalculate(PlaceLocation location) async {
+    try {
+      Position _user = await Geolocator()
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      print("${_user.longitude} + ${_user.latitude}");
+      distance = await Geolocator().distanceBetween(_user.latitude,
+          _user.longitude, location.latitude, location.longitude);
+    } catch (error) {
+      throw (error);
+    }
+  }
+
   @override
   void initState() {
-    super.initState();
     getData();
+    distanceCalculate(widget.location);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var _height = MediaQuery.of(context).size.height;
-    var _width = MediaQuery.of(context).size.width;
     return Container(
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.grey[850],
-//        gradient: LinearGradient(
-//            begin: Alignment.topCenter,
-//            end: Alignment.bottomCenter,
-//            colors: bedNumber == 0
-//                ? [
-//                    Colors.white,
-//                    Colors.red,
-//                  ]
-//                : [
-//                    Colors.white,
-//                    Colors.green,
-//                  ]),
-//        color: bedNumber == 0 ? Colors.red : Colors.white,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -160,15 +160,17 @@ class _DisplayTileState extends State<DisplayTile> {
           //   ),
           // ),
           Container(
+            height: 40,
             margin: EdgeInsets.symmetric(vertical: 5),
             child: Center(
               child: Text(
                 hospitalName,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.w500,
                 ),
+                overflow: TextOverflow.fade,
               ),
             ),
           ),
@@ -195,7 +197,7 @@ class _DisplayTileState extends State<DisplayTile> {
                 color: Colors.white70,
               ),
               Text(
-                "0.0 km",
+                "$distance km",
                 style: TextStyle(color: Colors.white70),
               ),
             ],
