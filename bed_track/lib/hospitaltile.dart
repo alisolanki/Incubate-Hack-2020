@@ -148,7 +148,6 @@ class _DataTileState extends State<DataTile> {
                                     color: Colors.white, fontSize: 20),
                               ),
                             ),
-<<<<<<< HEAD
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
@@ -167,20 +166,6 @@ class _DataTileState extends State<DataTile> {
                                   ),
                                 ),
                               ],
-=======
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              "${distance.toString()}",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
->>>>>>> f6f2f564d7b7cff4606f5f728cf75ee84056b3eb
                             ),
                             SizedBox(
                               height: 10,
@@ -189,7 +174,7 @@ class _DataTileState extends State<DataTile> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  "${distance.ceil() / 1000}",
+                                  "${distance == null ? 0 : distance.ceil() / 1000}",
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 20),
                                 ),
