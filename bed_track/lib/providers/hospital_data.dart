@@ -4,6 +4,7 @@ import 'package:bedtrack/database/data.dart';
 import 'package:bedtrack/models/place.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart';
 
 class HospitalDataProvider with ChangeNotifier {
   List<DataBaseTemplate> _hospitaldata = [];
@@ -13,14 +14,13 @@ class HospitalDataProvider with ChangeNotifier {
   }
 
   Future<void> fetchData() async {
-    const url =
-        'https://incubateind-hack.firebaseio.com/hospitals.json';
+    List<DataBaseTemplate> _loadeddata = [];
+    const url = 'https://incubateind-hack.firebaseio.com/hospitals.json';
     try {
-      final _response = await http.get(url);
+      final Response _response = await http.get(url);
       final _extractedcategory =
           jsonDecode(_response.body) as Map<String, dynamic>;
       print(_extractedcategory);
-      List<DataBaseTemplate> _loadeddata = [];
       _extractedcategory.forEach((key, value) {
         _loadeddata.add(DataBaseTemplate(
           id: value['id'],
