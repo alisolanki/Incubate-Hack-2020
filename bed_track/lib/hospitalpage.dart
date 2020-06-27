@@ -1,10 +1,10 @@
-import 'package:bedtrack/calculators/user_location.dart';
-import 'package:bedtrack/displaytile.dart';
-import 'package:bedtrack/hospitaltile.dart';
-import 'package:bedtrack/models/place.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import './providers/hospital_data.dart';
+import './displaytile.dart';
+import './hospitaltile.dart';
 import './database/data.dart';
 
 class ShowHospital extends StatefulWidget {
@@ -13,35 +13,119 @@ class ShowHospital extends StatefulWidget {
 }
 
 class _ShowHospitalState extends State<ShowHospital> {
-  List<DataBase> _dataList, _filteredhospitals;
-  Future<PlaceLocation> _user = getLocation();
-  bool openSort = false;
-  bool avabed = false, closest = false, oxytanks = false, venti = false;
+  List<DataBaseTemplate> _filteredhospitals = [];
+  // Future<PlaceLocation> _user = getLocation();
+  bool _sorted = false;
+  bool _isInit = true;
+  var distance;
 
   @override
-  void initState() {
-    _dataList = DataBase().getData();
-    _filteredhospitals = _dataList;
-    super.initState();
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<HospitalDataProvider>(context).fetchData();
+      _filteredhospitals = Provider.of<HospitalDataProvider>(context).datalist;
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
+    List<DataBaseTemplate> _dataList =
+        Provider.of<HospitalDataProvider>(context).datalist;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(),
       home: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              openSort = !openSort;
-            });
-          },
-          backgroundColor: Colors.grey,
-          elevation: 0,
-          highlightElevation: 0,
-          child: Icon(openSort ? Icons.keyboard_return : Icons.filter_list),
-        ),
+            backgroundColor: Colors.grey,
+            child: Icon(_sorted ? Icons.keyboard_return : Icons.filter_list),
+            onPressed: () {
+              showModalBottomSheet<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [Colors.black87, Colors.grey[850]],
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 20.0, bottom: 10.0),
+                            child: Text(
+                              "Sort",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Divider(
+                            color: Colors.white,
+                          ),
+                          FlatButton(
+                            onPressed: () => setState(() {
+                              _sorted = true;
+                              Navigator.pop(context);
+                            }),
+                            child: Text(
+                              "By distance",
+                              style: TextStyle(color: Colors.cyanAccent),
+                            ),
+                          ),
+                          FlatButton(
+                            onPressed: () => setState(() {
+                              _sorted = true;
+                              Navigator.pop(context);
+                            }),
+                            child: Text(
+                              "By availibility of beds",
+                              style: TextStyle(color: Colors.cyanAccent),
+                            ),
+                          ),
+                          FlatButton(
+                            onPressed: () => setState(() {
+                              _sorted = true;
+                              Navigator.pop(context);
+                            }),
+                            child: Text(
+                              "By availibility of ventilators",
+                              style: TextStyle(color: Colors.cyanAccent),
+                            ),
+                          ),
+                          FlatButton(
+                            onPressed: () => setState(() {
+                              _sorted = true;
+                              Navigator.pop(context);
+                            }),
+                            child: Text(
+                              "By availibility of oxygen tanks",
+                              style: TextStyle(color: Colors.cyanAccent),
+                            ),
+                          ),
+                          FlatButton(
+                            onPressed: () => setState(() {
+                              _sorted = false;
+                              Navigator.pop(context);
+                            }),
+                            child: Text(
+                              "None",
+                              style: TextStyle(color: Colors.cyanAccent),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+            }),
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -90,189 +174,48 @@ class _ShowHospitalState extends State<ShowHospital> {
                 ),
               ),
               Expanded(
-                  child: Center(
-                child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        childAspectRatio: 1, maxCrossAxisExtent: 400),
-                    scrollDirection: Axis.vertical,
-                    itemCount: _filteredhospitals.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        key: ValueKey(_filteredhospitals[index].id),
-                        child: DisplayTile(
-                          imageURL: _filteredhospitals[index].imageURL,
-                          location: _filteredhospitals[index].location,
-                          bedNumber: _filteredhospitals[index].bedNumber,
-                          hospitalName: _filteredhospitals[index].hospitalName,
-                          phoneNumber: _filteredhospitals[index].phoneNumber,
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) {
-                                return DataTile(
-                                  imageURL: _filteredhospitals[index].imageURL,
-                                  location: _filteredhospitals[index].location,
-                                  bedNumber:
-                                      _filteredhospitals[index].bedNumber,
-                                  hospitalName:
-                                      _filteredhospitals[index].hospitalName,
-                                  phoneNumber:
-                                      _filteredhospitals[index].phoneNumber,
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      );
-                    }),
-              )),
-              Container(
-                color: Color(0xff0404040),
-                alignment: Alignment.centerRight,
-                child: Visibility(
-                    visible: openSort,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Sort by : ",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
-                          color: Colors.black,
-                          height: 1,
-                          width: 200,
-                        ),
-                        FlatButton(
-                          onPressed: () {
-                            setState(() {
-                              avabed = !avabed;
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text(
-                                "number of beds available    ",
-                                style: TextStyle(
-                                  color: avabed ? Colors.white : Colors.grey,
-                                ),
-                              ),
-                              Icon(
-                                avabed
-                                    ? Icons.check_box
-                                    : Icons.check_box_outline_blank,
-                                color: avabed ? Colors.white : Colors.grey,
-                              ),
-                            ],
+                child: Center(
+                  child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          childAspectRatio: 1, maxCrossAxisExtent: 400),
+                      scrollDirection: Axis.vertical,
+                      itemCount: _filteredhospitals.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          key: ValueKey(_filteredhospitals[index].id),
+                          child: DisplayTile(
+                            imageURL: _filteredhospitals[index].imageURL,
+                            location: _filteredhospitals[index].location,
+                            bedNumber: _filteredhospitals[index].bedNumber,
+                            hospitalName:
+                                _filteredhospitals[index].hospitalName,
+                            phoneNumber: _filteredhospitals[index].phoneNumber,
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
-                          color: Colors.grey,
-                          height: 0,
-                          width: 200,
-                        ),
-                        FlatButton(
-                          onPressed: () {
-                            setState(() {
-                              oxytanks = !oxytanks;
-                            });
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (BuildContext context) {
+                                  return DataTile(
+                                    imageURL:
+                                        _filteredhospitals[index].imageURL,
+                                    location:
+                                        _filteredhospitals[index].location,
+                                    bedNumber:
+                                        _filteredhospitals[index].bedNumber,
+                                    hospitalName:
+                                        _filteredhospitals[index].hospitalName,
+                                    phoneNumber:
+                                        _filteredhospitals[index].phoneNumber,
+                                  );
+                                },
+                              ),
+                            );
                           },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text(
-                                "Availability of Oxygen tanks ",
-                                style: TextStyle(
-                                  color: oxytanks ? Colors.white : Colors.grey,
-                                ),
-                              ),
-                              Icon(
-                                oxytanks
-                                    ? Icons.check_box
-                                    : Icons.check_box_outline_blank,
-                                color: oxytanks ? Colors.white : Colors.grey,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
-                          color: Colors.grey,
-                          height: 0,
-                          width: 200,
-                        ),
-                        FlatButton(
-                          onPressed: () {
-                            setState(() {
-                              venti = !venti;
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text(
-                                "Availability of Ventilators    ",
-                                style: TextStyle(
-                                  color: venti ? Colors.white : Colors.grey,
-                                ),
-                              ),
-                              Icon(
-                                venti
-                                    ? Icons.check_box
-                                    : Icons.check_box_outline_blank,
-                                color: venti ? Colors.white : Colors.grey,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
-                          color: Colors.grey,
-                          height: 0,
-                          width: 200,
-                        ),
-                        FlatButton(
-                          onPressed: () {
-                            setState(() {
-                              closest = !closest;
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text(
-                                "Closest hospital                   ",
-                                style: TextStyle(
-                                  color: closest ? Colors.white : Colors.grey,
-                                ),
-                              ),
-                              Icon(
-                                closest
-                                    ? Icons.check_box
-                                    : Icons.check_box_outline_blank,
-                                color: closest ? Colors.white : Colors.grey,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 10),
-                          color: Colors.grey,
-                          height: 0,
-                          width: 200,
-                        ),
-                      ],
-                    )),
-              )
+                        );
+                      }),
+                ),
+              ),
             ],
           ),
         ),
