@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import './providers/hospital_data.dart';
 import './displaytile.dart';
-import './hospitaltile.dart';
 import './database/data.dart';
 
 class ShowHospital extends StatefulWidget {
@@ -13,7 +12,7 @@ class ShowHospital extends StatefulWidget {
 }
 
 class _ShowHospitalState extends State<ShowHospital> {
-  List<DataBaseTemplate> _filteredhospitals;
+  List<DataBaseTemplate> _filteredhospitals = [];
   // Future<PlaceLocation> _user = getLocation();
   bool _sorted = false;
   bool startonce = true;
@@ -36,8 +35,6 @@ class _ShowHospitalState extends State<ShowHospital> {
   void didChangeDependencies() {
     if (_isInit) {
       Provider.of<HospitalDataProvider>(context).fetchData();
-      _dataList = Provider.of<HospitalDataProvider>(context).datalist;
-      _filteredhospitals = _dataList;
     }
 //    _isInit = false;
     super.didChangeDependencies();
@@ -47,6 +44,8 @@ class _ShowHospitalState extends State<ShowHospital> {
   Widget build(BuildContext context) {
     start();
     _dataList = Provider.of<HospitalDataProvider>(context).datalist;
+    _filteredhospitals = _dataList;
+    print("${_dataList.length}");
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(),

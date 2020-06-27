@@ -34,7 +34,7 @@ class _DisplayTileState extends State<DisplayTile> {
   PlaceLocation location;
   String imageURL;
   String phoneNumber;
-  double distance;
+  Future<double> distance;
 
   void getData() {
     id = widget.id;
@@ -49,9 +49,8 @@ class _DisplayTileState extends State<DisplayTile> {
     try {
       Position _user = await Geolocator()
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      print("${_user.longitude} + ${_user.latitude}");
       distance = await Geolocator().distanceBetween(_user.latitude,
-          _user.longitude, location.latitude, location.longitude);
+          _user.longitude, location.latitude, location.longitude) as Future<double>;
     } catch (error) {
       throw (error);
     }
@@ -142,7 +141,11 @@ class _DisplayTileState extends State<DisplayTile> {
                   color: Colors.white70,
                 ),
                 Text(
+<<<<<<< HEAD
                   "${distance == null ? 0 : distance.ceil() / 1000} km",
+=======
+                  "${distance} km",
+>>>>>>> f6f2f564d7b7cff4606f5f728cf75ee84056b3eb
                   style: TextStyle(color: Colors.white70),
                 ),
               ],
@@ -162,7 +165,7 @@ class _DisplayTileState extends State<DisplayTile> {
                 bedNumber: bedNumber,
                 hospitalName: hospitalName,
                 phoneNumber: phoneNumber,
-                distance: distance,
+                distance: 1.0,
               );
             },
           ),
