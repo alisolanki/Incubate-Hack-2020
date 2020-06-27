@@ -16,9 +16,21 @@ class _ShowHospitalState extends State<ShowHospital> {
   List<DataBaseTemplate> _filteredhospitals;
   // Future<PlaceLocation> _user = getLocation();
   bool _sorted = false;
+  bool startonce = true;
   bool _isInit = true;
   List<DataBaseTemplate> _dataList;
   var distance;
+
+  void start() {
+    setState(() {
+      if (startonce) {
+        Provider.of<HospitalDataProvider>(context).fetchData();
+        _dataList = Provider.of<HospitalDataProvider>(context).datalist;
+        _filteredhospitals = _dataList;
+      }
+      startonce = false;
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -27,12 +39,13 @@ class _ShowHospitalState extends State<ShowHospital> {
       _dataList = Provider.of<HospitalDataProvider>(context).datalist;
       _filteredhospitals = _dataList;
     }
-    _isInit = false;
+//    _isInit = false;
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
+    start();
     _dataList = Provider.of<HospitalDataProvider>(context).datalist;
     return MaterialApp(
       debugShowCheckedModeBanner: false,

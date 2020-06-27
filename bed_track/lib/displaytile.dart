@@ -60,7 +60,7 @@ class _DisplayTileState extends State<DisplayTile> {
   @override
   void initState() {
     getData();
-    distanceCalculate(location);
+    this.distanceCalculate(location);
     super.initState();
   }
 
@@ -142,7 +142,7 @@ class _DisplayTileState extends State<DisplayTile> {
                   color: Colors.white70,
                 ),
                 Text(
-                  "${distance.toInt() / 1000} km",
+                  "${distance == null ? 0 : distance.ceil() / 1000} km",
                   style: TextStyle(color: Colors.white70),
                 ),
               ],
