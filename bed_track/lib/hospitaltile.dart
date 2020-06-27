@@ -4,42 +4,63 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 class DataTile extends StatefulWidget {
+  final String id;
   final int bedNumber;
   final String hospitalName;
   final PlaceLocation location;
   final String imageURL;
   final String phoneNumber;
+  final double distance;
   DataTile({
+    this.id,
     this.hospitalName,
     this.imageURL,
     this.location,
     this.phoneNumber,
     this.bedNumber,
+    this.distance,
   });
   @override
   _DataTileState createState() => _DataTileState();
 }
 
 class _DataTileState extends State<DataTile> {
+  String id;
   int bedNumber;
   String hospitalName;
   PlaceLocation location;
   String imageURL;
   String phoneNumber;
-  var distance;
-  
-  @override
-  void initState() {
-    getData();
-    super.initState();
-  }
+  double distance;
 
   void getData() {
+    id: widget.id;
     bedNumber = widget.bedNumber;
     hospitalName = widget.hospitalName;
     location = widget.location;
     imageURL = widget.imageURL;
     phoneNumber = widget.phoneNumber;
+    distance = widget.distance;
+  }
+
+  Future<void> distanceCalculate(PlaceLocation location) async {
+    try {
+      Position _user = await Geolocator()
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      print("${_user.longitude} + ${_user.latitude}");
+      distance = await Geolocator().distanceBetween(_user.latitude,
+          _user.longitude, location.latitude, location.longitude);
+    } catch (error) {
+      throw (error);
+    }
+  }
+
+  
+  @override
+  void initState() {
+    getData();
+    distanceCalculate(location);
+    super.initState();
   }
 
   @override
